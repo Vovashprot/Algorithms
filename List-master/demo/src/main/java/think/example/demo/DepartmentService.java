@@ -17,28 +17,36 @@ public class DepartmentService {
         this.employeeService = employeeService;
     }
     public Employee maxSalary(int department){
-        return employeeService.findall()
+        return employeeService.findAll()
                 .stream()
                 .filter(e->e.getDepartment() == department)
                 .max(Comparator.comparing(Employee::getSalary))
                 .orElse(null);
     }
     public Employee minSalary(int department){
-        return employeeService.findall()
+        return employeeService.findAll()
                 .stream()
                 .filter(e->e.getDepartment() == department)
                 .min(Comparator.comparing(Employee::getSalary))
                 .orElse(null);
     }
+    public Integer sumSalary(int department){
+        return employeeService.findAll()
+                .stream()
+                .filter(e->e.getDepartment() == department)
+                .mapToInt(Employee::getSalary)
+                .sum();
+
+    }
     public Collection<Employee> allByDepartment(int department){
-        return employeeService.findall()
+        return employeeService.findAll()
                 .stream()
                 .filter(e->e.getDepartment() == department)
                 .collect(Collectors.toList());
     }
 
     public Map<Integer, List<Employee>> allEmployees (){
-        return employeeService.findall()
+        return employeeService.findAll()
                 .stream()
                 .collect(groupingBy(Employee::getDepartment));
     }
