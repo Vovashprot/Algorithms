@@ -1,9 +1,6 @@
 package think.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,25 +15,25 @@ public class DepartmentController {
         this.service = service;
     }
 
-    @GetMapping("/salary/max")
-    public Employee maxSalary(@RequestParam int department){
+    @GetMapping("/{department}/salary/max")
+    public Employee maxSalary(@PathVariable ("department")   int department){
         return service.maxSalary(department);
     }
-    @GetMapping("/salary/min")
-    public Employee minSalary(@RequestParam int department){
+    @GetMapping("/{department}/salary/min")
+    public Employee minSalary(@PathVariable ("department") int department){
         return service.minSalary(department);
     }
 
-    @GetMapping("/salary/sum")
-    public Employee sumSalary(@RequestParam int department){
+    @GetMapping("/{department}/salary/sum")
+    public Integer sumSalary(@PathVariable ("department")  int department){
         return service.sumSalary(department);
     }
 
-    @GetMapping("/all")
-    public Collection<Employee> allByDepartment(@RequestParam int department){
+    @GetMapping("/{department}/employees")
+    public Collection<Employee> allByDepartment(@PathVariable ("department")  int department){
         return service.allByDepartment(department);
     }
-    @GetMapping("/all")
+    @GetMapping("/employees")
     public Map<Integer, List<Employee>> allEmployees(){
         return service.allEmployees();
     }

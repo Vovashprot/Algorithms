@@ -52,6 +52,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return employee;
     }
+    @Override
+    public Employee setDepartment(String firstName, String lastname,int department) {
+        check(firstName, lastname);
+        String key = (firstName+"_"+lastname).toLowerCase();
+        Employee employee = employeeList.get(key);
+        if (employee == null){
+            throw new EmployeeNotFoundException();
+        }
+        employee.setDepartment(department);
+        return employee;
+    }
+    @Override
+    public Employee setSalary(String firstName, String lastname,int salary) {
+        check(firstName, lastname);
+        String key = (firstName+"_"+lastname).toLowerCase();
+        Employee employee = employeeList.get(key);
+        if (employee == null){
+            throw new EmployeeNotFoundException();
+        }
+        employee.setSalary(salary);
+        return employee;
+    }
+
     private void check(String... args){
         for (String arg : args){
             if (StringUtils.isAlpha(arg)){
