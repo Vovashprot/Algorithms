@@ -16,9 +16,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employeeList = new HashMap<>(mapLimit);
 
     @Override
-    public Employee add(String firstName, String lastname) {
+    public Employee add(String firstName, String lastname, int department,int salary) {
         check(firstName, lastname);
-        Employee employee = new Employee(firstName,lastname);
+        Employee employee = new Employee(firstName,lastname,department, salary);
         if (employeeList.size()>mapLimit){
             throw new EmployeeStorageIsFullException();
         }

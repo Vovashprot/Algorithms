@@ -18,9 +18,9 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public Employee createEmployee(
-            @RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName)
+            @RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,@RequestParam("department") int department,@RequestParam("salary") int salary)
     {
-        return service.add(firstName, lastName);
+        return service.add(firstName, lastName,department,salary);
     }
     @GetMapping(path = "/find")
     public Employee findEmployee(

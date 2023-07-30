@@ -9,11 +9,11 @@ public class Employee {
     private int salary;
 
 
-    public Employee(String firstName, String lastName) {
+    public Employee(String firstName, String lastName,int department,int salary) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.department = this.department;
-        this.salary = this.salary;
+        this.department = department;
+        this.salary = salary;
 
 
     }
