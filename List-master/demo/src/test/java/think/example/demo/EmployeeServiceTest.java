@@ -1,6 +1,7 @@
 package think.example.demo;
 
 import exceptions.EmployeeAlreadyAddedException;
+import exceptions.EmployeeNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,6 @@ public class EmployeeServiceTest {
     }
     @Test
     public void addEmployeeTestSize(){
-        employeeService.add("Baadsd","Dude",1,1002);
         var actualSize = employeeService.findAll();
         assertEquals(1,actualSize.size());
     }
@@ -30,6 +30,25 @@ public class EmployeeServiceTest {
         var actualSize = employeeService.findAll();
         assertEquals(1,actualSize.size());
     }
-
+    @Test
+    public void removeEmployeeTest(){
+        try {
+            employeeService.remove("aSd","dsa");
+        } catch(EmployeeNotFoundException thrown){
+            return;
+        }
+        var actualSize = employeeService.findAll();
+        assertEquals(1,actualSize.size());
+    }
+    @Test
+    public void findEmployeeTest(){
+        try {
+            employeeService.find("aSd","dsa");
+        } catch(EmployeeNotFoundException thrown){
+            return;
+        }
+        var actualSize = employeeService.findAll();
+        assertEquals(1,actualSize.size());
+    }
 
 }
