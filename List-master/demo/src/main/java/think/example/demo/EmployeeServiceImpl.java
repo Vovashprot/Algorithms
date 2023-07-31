@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private void check(String... args){
         for (String arg : args){
-            if (StringUtils.isAlpha(arg)){
+            if (StringUtils.isAlpha(arg)==false){
                 throw new NotValidCharacterException();
             }
         }
