@@ -52,6 +52,14 @@ public class DepartmentServiceTest {
                 Arguments.of(3,1024));
     }
 
+    private static Collection<Arguments> parameters3(){
+        return List.of(
+                Arguments.of(1,1),
+                Arguments.of(2,2),
+                Arguments.of(3,1));
+
+    }
+
     @ParameterizedTest()
     @MethodSource("parameters")
     void testMin(int dept, int min){
@@ -67,12 +75,16 @@ public class DepartmentServiceTest {
         assertEquals(sum, actual);
     }
 
+    @ParameterizedTest()
+    @MethodSource("parameters3")
+    void testAllByDepartment(int dept,int expectedSize){
+        var depAll = departmentService.allByDepartment(dept);
+        assertEquals(depAll.size(),expectedSize);
+    }
     @Test
-    void testAllByDepartment(){
-        var firstDepAll = departmentService.allByDepartment(1);
-        assertEquals(firstDepAll.size(),1);
-        assertEquals(List.of(DATASET.get(0)),firstDepAll);
-
+    void testDeps(){
+        var depAll = departmentService.allEmployees();
+        assertEquals(depAll.size(),3);
     }
 
 }
