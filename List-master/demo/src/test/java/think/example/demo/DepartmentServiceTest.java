@@ -12,7 +12,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class DepartmentServiceTest {
@@ -44,6 +45,12 @@ public class DepartmentServiceTest {
                 Arguments.of(3,1024));
 
     }
+    private static Collection<Arguments> parameters2(){
+        return List.of(
+                Arguments.of(2,2069),
+                Arguments.of(1,1002),
+                Arguments.of(3,1024));
+    }
 
     @ParameterizedTest()
     @MethodSource("parameters")
@@ -52,10 +59,20 @@ public class DepartmentServiceTest {
         assertNotNull(actual);
         assertEquals(min, actual.getSalary());
     }
+    @ParameterizedTest()
+    @MethodSource("parameters2")
+    void testSum(int dept, int sum){
+        var actual = departmentService.sumSalary(dept);
+        assertNotNull(actual);
+        assertEquals(sum, actual);
+    }
+
     @Test
     void testAllByDepartment(){
         var firstDepAll = departmentService.allByDepartment(1);
         assertEquals(firstDepAll.size(),1);
-        assertIterableEquals(List.of(DATASET.get(0)),firstDepAll);
+        assertEquals(List.of(DATASET.get(0)),firstDepAll);
+
     }
+
 }
