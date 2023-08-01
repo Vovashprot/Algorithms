@@ -1,10 +1,23 @@
 package stringList;
 
 public class StringListImpl implements StringList {
-
+    private final int size = 16;
+    private final int cut = 4;
+    private String[] array = new String[size];
+    private int pointer = 0;
+    public void resize(int newSize){
+    String[] arrayChange = new String[newSize];
+        for(int i=0; i == size;i++){
+            arrayChange[i] = array[i];
+        }
+        array = arrayChange;
+    }
     @Override
     public String add(String item) {
-        return null;
+        if(pointer == array.length-1)
+            resize(array.length*2);
+            array[pointer++] = item;
+            return item;
     }
 
     @Override
