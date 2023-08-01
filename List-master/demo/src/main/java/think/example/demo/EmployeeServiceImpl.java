@@ -16,9 +16,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employeeList = new HashMap<>(mapLimit);
 
     @Override
-    public Employee add(String firstName, String lastname) {
+    public Employee add(String firstName, String lastname, int department,int salary) {
         check(firstName, lastname);
-        Employee employee = new Employee(firstName,lastname);
+        Employee employee = new Employee(firstName,lastname,department, salary);
         if (employeeList.size()>mapLimit){
             throw new EmployeeStorageIsFullException();
         }
@@ -52,9 +52,32 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return employee;
     }
+    @Override
+    public Employee setDepartment(String firstName, String lastname,int department) {
+        check(firstName, lastname);
+        String key = (firstName+"_"+lastname).toLowerCase();
+        Employee employee = employeeList.get(key);
+        if (employee == null){
+            throw new EmployeeNotFoundException();
+        }
+        employee.setDepartment(department);
+        return employee;
+    }
+    @Override
+    public Employee setSalary(String firstName, String lastname,int salary) {
+        check(firstName, lastname);
+        String key = (firstName+"_"+lastname).toLowerCase();
+        Employee employee = employeeList.get(key);
+        if (employee == null){
+            throw new EmployeeNotFoundException();
+        }
+        employee.setSalary(salary);
+        return employee;
+    }
+
     private void check(String... args){
         for (String arg : args){
-            if (StringUtils.isAlpha(arg)){
+            if (StringUtils.isAlpha(arg)==false){
                 throw new NotValidCharacterException();
             }
         }
