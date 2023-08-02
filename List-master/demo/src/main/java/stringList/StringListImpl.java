@@ -1,6 +1,6 @@
 package stringList;
 
-public class StringListImpl implements StringList {
+public class StringListImpl implements StringList  {
     private final int size = 16;
     private final int cut = 4;
     private String[] array = new String[size];
@@ -57,7 +57,10 @@ public class StringListImpl implements StringList {
 
     @Override
     public String get(int index) {
-        return null;
+        if ((array.length < index-1) || (array[index] == null)){
+            throw new RuntimeException();
+        }
+        return array[index];
     }
 
     @Override
