@@ -7,7 +7,7 @@ public class StringListImpl implements StringList  {
     private int pointer = 0;
     public void resize(int newSize){
     String[] arrayChange = new String[newSize];
-        for(int i=0; i == size;i++){
+        for(int i=0; i == array.length;i++){
             arrayChange[i] = array[i];
         }
         array = arrayChange;
@@ -24,16 +24,16 @@ public class StringListImpl implements StringList  {
     public String add(int index, String item) {
         while (index > array.length-1) {
             resize(array.length*2);
-            pointer++;
         }
         if (array[index] != null)
+            pointer++;
             array[index] = item;
         return item;
     }
 
     @Override
     public String set(int index, String item) {
-        if((array == null) || (index> array.length)){
+        if((array[index] == null) || (index> array.length)){
             throw new RuntimeException();
         }
         array[index] = item;
@@ -80,7 +80,7 @@ public class StringListImpl implements StringList  {
 
     @Override
     public int size() {
-        return array.length;
+        return pointer;
     }
 
     @Override
