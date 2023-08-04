@@ -14,7 +14,7 @@ public class StringListImpl implements StringList  {
     }
     @Override
     public String add(String item) {
-        if(pointer == array.length-1)
+        if(pointer >= array.length-1)
             resize(array.length*2);
             array[pointer++] = item;
             return item;
@@ -22,12 +22,22 @@ public class StringListImpl implements StringList  {
 
     @Override
     public String add(int index, String item) {
-        return null;
+        while (index > array.length-1) {
+            resize(array.length*2);
+            pointer++;
+        }
+        if (array[index] != null)
+            array[index] = item;
+        return item;
     }
 
     @Override
     public String set(int index, String item) {
-        return null;
+        if((array == null) || (index> array.length)){
+            throw new RuntimeException();
+        }
+        array[index] = item;
+        return item;
     }
 
     @Override
@@ -70,7 +80,7 @@ public class StringListImpl implements StringList  {
 
     @Override
     public int size() {
-        return 0;
+        return array.length;
     }
 
     @Override
