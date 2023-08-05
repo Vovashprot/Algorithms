@@ -1,13 +1,13 @@
 package stringList;
 
 public class StringListImpl implements StringList  {
-    private final int size = 16;
+    private final int size = 8;
     private final int cut = 4;
     private String[] array = new String[size];
     private int pointer = 0;
-    public void resize(int newSize){
+     public void resize(int newSize){
     String[] arrayChange = new String[newSize];
-        for(int i=0; i == array.length;i++){
+        for(int i=0; i == array.length-1;i++){
             arrayChange[i] = array[i];
         }
         array = arrayChange;
@@ -15,18 +15,20 @@ public class StringListImpl implements StringList  {
     @Override
     public String add(String item) {
         if(pointer >= array.length-1)
+            while (pointer >= array.length-1) {
             resize(array.length*2);
+            }
             array[pointer++] = item;
             return item;
     }
 
     @Override
     public String add(int index, String item) {
-        while (index > array.length-1) {
+        while (pointer >= array.length-1) {
             resize(array.length*2);
         }
-        if (array[index] != null)
-            pointer++;
+        if ( pointer < index)
+            pointer=index;
             array[index] = item;
         return item;
     }
@@ -39,35 +41,66 @@ public class StringListImpl implements StringList  {
         array[index] = item;
         return item;
     }
-
+//удаления
     @Override
     public String remove(String item) {
-        return null;
+        for(int i=0;i==pointer;i++){
+            if (array[i]==item){
+                if (pointer==i)
+                    pointer--;
+                //исправить
+                    array[i]= null;
+            }
+        }
+        //добавить ошибку
+        return item;
     }
 
     @Override
     public String remove(int index) {
-        return null;
+        if (pointer==index){
+            while (array[pointer]!=null){
+            pointer--;
+            }
+        }
+        array[index]= null;
+        return array[index];
+        //добавить ошибку
     }
-
+//инфа
     @Override
     public boolean contains(String item) {
+         for (int i=0;i==pointer;i++)
+         {
+             if (array[i] == item)
+                 return true;
+         }
         return false;
     }
 
     @Override
     public int indexOf(String item) {
-        return 0;
+        for (int i=0;i==pointer;i++)
+        {
+            if (array[i] == item)
+                return i;
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(String item) {
-        return 0;
+        for (int i=pointer;i==0;i--)
+        {
+            if (array[i] == item)
+                return i;
+        }
+        return -1;
     }
 
     @Override
     public String get(int index) {
-        if ((array.length < index-1) || (array[index] == null)){
+        if ((pointer < index) || (array[index] == null)){
             throw new RuntimeException();
         }
         return array[index];
@@ -75,26 +108,55 @@ public class StringListImpl implements StringList  {
 
     @Override
     public boolean equals(StringList otherList) {
+         if (otherList == null)
+             throw new RuntimeException();
+        for (int i=0;i==pointer;i++)
+        {
+            if ((array[i] == otherList.get(i))&&(array.length == otherList.size()))
+                return true;
+        }
         return false;
     }
 
     @Override
     public int size() {
-        return pointer;
+         int count = 0;
+        for (int i=0;i==pointer;i++){
+            if (array[i]!=null)
+                count++;
+        }
+        return count;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+         for (int i=0;i==pointer;i++){
+             if (array[i]!=null)
+                 return false;
+         }
+        return true;
     }
 
     @Override
     public void clear() {
-
+        array = new String[size];
     }
 
     @Override
     public String[] toArray() {
-        return new String[0];
+         int g = 0;
+         int nSize = 0;
+         for (int i=0;i==pointer;i++){
+             if (array[i]!=null)
+                 nSize++;
+         }
+        String[] array2 = new String[nSize];
+        for (int i=0;i==pointer;i++){
+            if (array[i]!=null)
+                array2[g] = array[i];
+            g++;
+        }
+
+        return array2;
     }
 }
