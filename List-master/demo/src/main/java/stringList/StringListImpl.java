@@ -4,21 +4,28 @@ public class StringListImpl implements StringList  {
     private final int size = 8;
     private final int cut = 4;
     private String[] array = new String[size];
-    private int pointer = 0;
+    private int pointer = -1;
+
+    public int getPointer(){
+        return pointer;
+    }
      public void resize(int newSize){
     String[] arrayChange = new String[newSize];
-        for(int i=0; i == array.length-1;i++){
+        for(int i=0; i <= array.length-1;i++){
+            if(array[i]!=null)
             arrayChange[i] = array[i];
         }
         array = arrayChange;
     }
     @Override
     public String add(String item) {
-        if(pointer >= array.length-1)
+
             while (pointer >= array.length-1) {
             resize(array.length*2);
             }
-            array[pointer++] = item;
+
+            pointer++;
+            array[pointer] = item;
             return item;
     }
 
@@ -44,33 +51,46 @@ public class StringListImpl implements StringList  {
 //удаления
     @Override
     public String remove(String item) {
-        for(int i=0;i==pointer;i++){
+        boolean del = false;
+        for(int i=0;i<=pointer;i++){
             if (array[i]==item){
-                if (pointer==i)
+                if (pointer <array.length/2){
+                    resize(array.length/2);
+                }
+                array[i]= null;
+                if(i == pointer)
+                do {
                     pointer--;
-                //исправить
-                    array[i]= null;
+                } while (array[pointer]==null);
+
+                return item;
             }
+
         }
         //добавить ошибку
-        return item;
+        throw new RuntimeException();
     }
 
     @Override
     public String remove(int index) {
+        if (array[index] == null ||index>pointer){
+            throw new RuntimeException();
+        }
+        array[index]= null;
         if (pointer==index){
-            while (array[pointer]!=null){
+            while (array[pointer]==null){
             pointer--;
             }
         }
-        array[index]= null;
+        if (pointer <array.length/2){
+            resize(array.length/2);
+        }
         return array[index];
-        //добавить ошибку
     }
 //инфа
     @Override
     public boolean contains(String item) {
-         for (int i=0;i==pointer;i++)
+         for (int i=0;i<=pointer;i++)
          {
              if (array[i] == item)
                  return true;
@@ -80,7 +100,7 @@ public class StringListImpl implements StringList  {
 
     @Override
     public int indexOf(String item) {
-        for (int i=0;i==pointer;i++)
+        for (int i=0;i<=pointer;i++)
         {
             if (array[i] == item)
                 return i;
@@ -90,7 +110,7 @@ public class StringListImpl implements StringList  {
 
     @Override
     public int lastIndexOf(String item) {
-        for (int i=pointer;i==0;i--)
+        for (int i=pointer;i>=0;i--)
         {
             if (array[i] == item)
                 return i;
@@ -110,7 +130,7 @@ public class StringListImpl implements StringList  {
     public boolean equals(StringList otherList) {
          if (otherList == null)
              throw new RuntimeException();
-        for (int i=0;i==pointer;i++)
+        for (int i=0;i<=pointer;i++)
         {
             if ((array[i] == otherList.get(i))&&(array.length == otherList.size()))
                 return true;
@@ -121,7 +141,7 @@ public class StringListImpl implements StringList  {
     @Override
     public int size() {
          int count = 0;
-        for (int i=0;i==pointer;i++){
+        for (int i=0;i<=pointer;i++){
             if (array[i]!=null)
                 count++;
         }
@@ -130,7 +150,7 @@ public class StringListImpl implements StringList  {
 
     @Override
     public boolean isEmpty() {
-         for (int i=0;i==pointer;i++){
+         for (int i=0;i<pointer;i++){
              if (array[i]!=null)
                  return false;
          }
@@ -146,17 +166,16 @@ public class StringListImpl implements StringList  {
     public String[] toArray() {
          int g = 0;
          int nSize = 0;
-         for (int i=0;i==pointer;i++){
+         for (int i=0;i<=pointer;i++){
              if (array[i]!=null)
                  nSize++;
          }
         String[] array2 = new String[nSize];
-        for (int i=0;i==pointer;i++){
+        for (int i=0;i<=pointer;i++){
             if (array[i]!=null)
                 array2[g] = array[i];
             g++;
         }
-
         return array2;
     }
 }

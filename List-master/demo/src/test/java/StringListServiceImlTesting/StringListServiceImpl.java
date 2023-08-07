@@ -13,14 +13,27 @@ class StringListTest {
     @BeforeEach
     public void SetUp(){
         stringList = new StringListImpl();
-
-        for (int i = 0;i >=elementsQuantity;i++){
             stringList.add("sadad");
-        }
+            stringList.add("sadad");
+            stringList.add("sadad2");
+            stringList.add(5,"asdd");
+            stringList.add("sadad");
+            stringList.add("sadad");
+            stringList.add("sadad2");
     }
     @Test
-    void addTest() {
-        
+    public void addAndGetTest() {
+        assertEquals(stringList.size(), 3);
     }
+    @Test
+    public void removeAndSizeTest() {
+        stringList.remove("sadad2");
+        //assertEquals(stringList.get(1), "sadad2");
+        //assertEquals(stringList.get(2), "asdd");
+        assertEquals(stringList.size(), 6);
+        System.out.println(stringList.toArray());
+        //(stringList.getPointer(), 2);
+    }
+
 
 }
