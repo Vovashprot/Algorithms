@@ -1,5 +1,7 @@
 package stringList;
 
+import java.util.Arrays;
+
 public class StringListImpl implements StringList  {
     private final int size = 8;
     private final int cut = 4;
@@ -21,7 +23,7 @@ public class StringListImpl implements StringList  {
     public String add(String item) {
 
             while (pointer >= array.length-1) {
-            resize(array.length*2);
+            resize(array.length+8);
             }
 
             pointer++;
@@ -31,13 +33,16 @@ public class StringListImpl implements StringList  {
 
     @Override
     public String add(int index, String item) {
-        while (pointer >= array.length-1) {
-            resize(array.length*2);
+        while (index >= array.length-1) {
+            resize(array.length+8);
         }
-        if ( pointer < index)
+        if ( pointer <= index)
             pointer=index;
+        if (array[index]==null){
             array[index] = item;
-        return item;
+            return item;
+        }
+        else throw new RuntimeException();
     }
 
     @Override
@@ -54,8 +59,8 @@ public class StringListImpl implements StringList  {
         boolean del = false;
         for(int i=0;i<=pointer;i++){
             if (array[i]==item){
-                if (pointer <array.length/2){
-                    resize(array.length/2);
+                if (pointer <array.length-8){
+                    resize(array.length/-8);
                 }
                 array[i]= null;
                 if(i == pointer)
@@ -82,12 +87,13 @@ public class StringListImpl implements StringList  {
             pointer--;
             }
         }
-        if (pointer <array.length/2){
-            resize(array.length/2);
+        if (pointer <array.length/-8){
+            resize(array.length/-8);
         }
         return array[index];
     }
 //инфа
+    //test needed
     @Override
     public boolean contains(String item) {
          for (int i=0;i<=pointer;i++)
@@ -125,7 +131,7 @@ public class StringListImpl implements StringList  {
         }
         return array[index];
     }
-
+//test needed
     @Override
     public boolean equals(StringList otherList) {
          if (otherList == null)
@@ -172,10 +178,18 @@ public class StringListImpl implements StringList  {
          }
         String[] array2 = new String[nSize];
         for (int i=0;i<=pointer;i++){
-            if (array[i]!=null)
+            if (array[i]!=null){
                 array2[g] = array[i];
             g++;
+            }
         }
         return array2;
+    }
+
+    @Override
+    public String toString() {
+        return "StringListImpl{" +
+                "array=" + Arrays.toString(array) +
+                '}';
     }
 }

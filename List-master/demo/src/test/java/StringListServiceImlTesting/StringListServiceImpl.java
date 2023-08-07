@@ -1,9 +1,13 @@
 package StringListServiceImlTesting;
 
+import ch.qos.logback.core.helpers.ThrowableToStringArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stringList.StringList;
 import stringList.StringListImpl;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,24 +20,61 @@ class StringListTest {
             stringList.add("sadad");
             stringList.add("sadad");
             stringList.add("sadad2");
-            stringList.add(5,"asdd");
+            stringList.add(3,"asdd");
             stringList.add("sadad");
             stringList.add("sadad");
             stringList.add("sadad2");
+        stringList.add("sadad");
+        stringList.add("sadad");
+        stringList.add("sadad");
     }
     @Test
     public void addAndGetTest() {
-        assertEquals(stringList.size(), 3);
+        assertEquals(stringList.size(), 10);
+        try{
+        stringList.add(42,"asdasdasd");
+        } catch (RuntimeException exe){};
+        System.out.println(stringList.toString());
     }
     @Test
     public void removeAndSizeTest() {
-        stringList.remove("sadad2");
-        //assertEquals(stringList.get(1), "sadad2");
-        //assertEquals(stringList.get(2), "asdd");
-        assertEquals(stringList.size(), 6);
-        System.out.println(stringList.toArray());
+        System.out.println(stringList.getPointer());
+         stringList.remove(8);
+         //stringList.remove("asdd");
+        assertEquals(stringList.size(), 9);
+        System.out.println(stringList.toString());
         //(stringList.getPointer(), 2);
     }
+    @Test
+    public void ToArrayTest() {
+        assertEquals(stringList.size(), 7);
+        System.out.println(stringList.toArray());
+        String[] example = new String[]{"sadad","sadad","sadad2","asdd","sadad","sadad","sadad2"};
+        assertEquals(Arrays.deepToString(stringList.toArray()), Arrays.toString(example));
+    }
 
+    @Test
+    public void IsEmptyAndClearTest() {
+        assertEquals(stringList.size(), 7);
+        assertEquals(stringList.isEmpty(),false);
+        stringList.clear();
+        assertEquals(stringList.isEmpty(),true);
+    }
+
+    @Test
+    public void setTest() {
+        stringList.set (2, "asd");
+        try {
+            stringList.set (10,"asddasd");
+        } catch (RuntimeException exe){}
+
+        System.out.println(stringList.toString());
+    }
+    @Test
+    public void indexOfTest() {
+        assertEquals(stringList.indexOf("asdd"),3);
+        assertEquals(stringList.indexOf("sadad"),0);
+        assertEquals(stringList.lastIndexOf("sadad"),9);
+    }
 
 }
