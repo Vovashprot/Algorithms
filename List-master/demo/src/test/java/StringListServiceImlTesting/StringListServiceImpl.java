@@ -48,15 +48,15 @@ class StringListTest {
         // }
     @Test
     public void ToArrayTest() {
-        assertEquals(stringList.size(), 7);
+        assertEquals(stringList.size(), 10);
         System.out.println(stringList.toArray());
-        String[] example = new String[]{"sadad","sadad","sadad2","asdd","sadad","sadad","sadad2"};
+        String[] example = new String[]{"sadad","sadad","sadad2","asdd","sadad","sadad","sadad2", "sadad", "sadad", "sadad"};
         assertEquals(Arrays.deepToString(stringList.toArray()), Arrays.toString(example));
     }
 
     @Test
     public void IsEmptyAndClearTest() {
-        assertEquals(stringList.size(), 7);
+        assertEquals(stringList.size(), 10);
         assertEquals(stringList.isEmpty(),false);
         stringList.clear();
         assertEquals(stringList.isEmpty(),true);
@@ -88,6 +88,7 @@ class StringListTest {
     public void equalsTest() {
         StringList stringList2;
         stringList2 = new StringListImpl();
+        stringList.clear();
         stringList.add("asd");
         stringList.add("asd");
         stringList2.add("asd");
