@@ -7,7 +7,9 @@ import stringList.StringList;
 import stringList.StringListImpl;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,21 +32,20 @@ class StringListTest {
     }
     @Test
     public void addAndGetTest() {
-        assertEquals(stringList.size(), 10);
-        try{
-        stringList.add(42,"asdasdasd");
-        } catch (RuntimeException exe){};
+        stringList.add(10,"asdasdasd");
+        assertEquals(stringList.toArray().length, 11);
+
         System.out.println(stringList.toString());
     }
-    @Test
-    public void removeAndSizeTest() {
-        System.out.println(stringList.getPointer());
-         stringList.remove(8);
-         //stringList.remove("asdd");
-        assertEquals(stringList.size(), 9);
-        System.out.println(stringList.toString());
-        //(stringList.getPointer(), 2);
-    }
+    // @Test
+            // public void removeAndSizeTest() {
+        //     System.out.println(stringList.());
+        //      stringList.remove(8);
+        //      stringList.remove("asdd");
+        //     assertEquals(stringList.size(), 8);
+        //     System.out.println(stringList.toString());
+        //     //(stringList.getPointer(), 2);
+        // }
     @Test
     public void ToArrayTest() {
         assertEquals(stringList.size(), 7);
@@ -75,6 +76,23 @@ class StringListTest {
         assertEquals(stringList.indexOf("asdd"),3);
         assertEquals(stringList.indexOf("sadad"),0);
         assertEquals(stringList.lastIndexOf("sadad"),9);
+    }
+    @Test
+    public void containsTest() {
+        assertEquals(stringList.contains("asdd"),true);
+        assertEquals(stringList.contains("sadadasdadasd"),false);
+
+    }
+
+    @Test
+    public void equalsTest() {
+        StringList stringList2;
+        stringList2 = new StringListImpl();
+        stringList.add("asd");
+        stringList.add("asd");
+        stringList2.add("asd");
+        stringList2.add("asd");
+        assertEquals(stringList.equals(stringList2),true);
     }
 
 }

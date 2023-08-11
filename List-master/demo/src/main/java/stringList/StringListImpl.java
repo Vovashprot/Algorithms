@@ -2,113 +2,107 @@ package stringList;
 
 import java.util.Arrays;
 
-public class StringListImpl implements StringList  {
-    private final int size = 8;
-    private final int cut = 4;
+public class StringListImpl implements StringList {
+    private final int size = 0;
     private String[] array = new String[size];
-    private int pointer = -1;
+    // private int pointer = -1;
 
-    public int getPointer(){
-        return pointer;
-    }
-     public void resize(int newSize){
-    String[] arrayChange = new String[newSize];
-        for(int i=0; i <= array.length-1;i++){
-            if(array[i]!=null)
-            arrayChange[i] = array[i];
+  //  public int getPointer() {
+   //     return pointer;
+   // }
+
+    private void resize(int newSize) {
+        if (newSize < array.length && array[newSize-1]!= null) {
+            throw new RuntimeException();
         }
-        array = arrayChange;
+       array = Arrays.copyOf(array,newSize);
+       //for (int i = 0; i <= array.length - 1; i++) {
+
     }
+
+   // public void reverse(int[] s){
+   //     int storage;
+   //     for (int i = 0; i<s.length/2;i++){
+   //         storage = s[s.length-1-i];
+   //         s[s.length-1-i] = s[i];
+   //         s[i] = storage;
+   //     }
+   //     //сделать без storage;
+   // }
+
     @Override
     public String add(String item) {
-
-            while (pointer >= array.length-1) {
-            resize(array.length+8);
-            }
-
-            pointer++;
-            array[pointer] = item;
-            return item;
+            resize(array.length + 1);
+        array[array.length-1] = item;
+        return item;
     }
 
     @Override
     public String add(int index, String item) {
-        while (index >= array.length-1) {
-            resize(array.length+8);
+        if(index > array.length)
+        {
+            throw new RuntimeException();
         }
-        if ( pointer <= index)
-            pointer=index;
-        if (array[index]==null){
-            array[index] = item;
-            return item;
+        resize(array.length+1);
+        for (int i = array.length-1; i>index;i--){
+            array[i]=array[i-1];
         }
-        else throw new RuntimeException();
+        array[index] =  item;
+        return item;
     }
 
     @Override
     public String set(int index, String item) {
-        if((array[index] == null) || (index> array.length)){
+        if ((array[index] == null) || (index >= array.length)) {
             throw new RuntimeException();
         }
         array[index] = item;
         return item;
     }
-//удаления
+
+    //удаления
     @Override
     public String remove(String item) {
-        boolean del = false;
-        for(int i=0;i<=pointer;i++){
-            if (array[i]==item){
-                if (pointer <array.length-8){
-                    resize(array.length/-8);
-                }
-                array[i]= null;
-                if(i == pointer)
-                do {
-                    pointer--;
-                } while (array[pointer]==null);
-
-                return item;
-            }
-
+        if (indexOf(item) ==-1) {
+            throw new RuntimeException();
         }
-        //добавить ошибку
-        throw new RuntimeException();
+      for (int i = indexOf(item) ; i < array.length-1;i++ ){
+          array[i] = array[i+1];
+      }
+      array[array.length-1] = null;
+      resize(array.length-1);
+        return item;
     }
 
     @Override
     public String remove(int index) {
-        if (array[index] == null ||index>pointer){
+        String deletedElement = array[index];
+        if (index >= array.length || array[index] == null){
             throw new RuntimeException();
         }
-        array[index]= null;
-        if (pointer==index){
-            while (array[pointer]==null){
-            pointer--;
-            }
+        for (int i = index ; i < array.length-1;i++ ){
+            array[i] = array[i+1];
         }
-        if (pointer <array.length/-8){
-            resize(array.length/-8);
-        }
-        return array[index];
+        array[array.length-1] = null;
+        resize(array.length-1);
+        return deletedElement;
     }
-//инфа
+
+    //инфа
     //test needed
     @Override
     public boolean contains(String item) {
-         for (int i=0;i<=pointer;i++)
-         {
-             if (array[i] == item)
-                 return true;
-         }
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(item))
+                return true;
+        }
         return false;
     }
 
     @Override
     public int indexOf(String item) {
-        for (int i=0;i<=pointer;i++)
-        {
-            if (array[i] == item)
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(item))
                 return i;
         }
         return -1;
@@ -116,9 +110,8 @@ public class StringListImpl implements StringList  {
 
     @Override
     public int lastIndexOf(String item) {
-        for (int i=pointer;i>=0;i--)
-        {
-            if (array[i] == item)
+        for (int i = array.length-1; i >= 0; i--) {
+            if (array[i].equals(item))
                 return i;
         }
         return -1;
@@ -126,19 +119,20 @@ public class StringListImpl implements StringList  {
 
     @Override
     public String get(int index) {
-        if ((pointer < index) || (array[index] == null)){
+        if ((index >= array.length) || (array[index] == null)) {
             throw new RuntimeException();
         }
         return array[index];
     }
-//test needed
+
+    //test needed
     @Override
     public boolean equals(StringList otherList) {
-         if (otherList == null)
-             throw new RuntimeException();
-        for (int i=0;i<=pointer;i++)
-        {
-            if ((array[i] == otherList.get(i))&&(array.length == otherList.size()))
+        if (otherList == null||array.length != otherList.toArray().length) {
+            throw new RuntimeException();
+        }
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(otherList.get(i)))
                 return true;
         }
         return false;
@@ -146,20 +140,15 @@ public class StringListImpl implements StringList  {
 
     @Override
     public int size() {
-         int count = 0;
-        for (int i=0;i<=pointer;i++){
-            if (array[i]!=null)
-                count++;
-        }
-        return count;
+        return array.length;
     }
 
     @Override
     public boolean isEmpty() {
-         for (int i=0;i<pointer;i++){
-             if (array[i]!=null)
-                 return false;
-         }
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null)
+                return false;
+        }
         return true;
     }
 
@@ -170,20 +159,7 @@ public class StringListImpl implements StringList  {
 
     @Override
     public String[] toArray() {
-         int g = 0;
-         int nSize = 0;
-         for (int i=0;i<=pointer;i++){
-             if (array[i]!=null)
-                 nSize++;
-         }
-        String[] array2 = new String[nSize];
-        for (int i=0;i<=pointer;i++){
-            if (array[i]!=null){
-                array2[g] = array[i];
-            g++;
-            }
-        }
-        return array2;
+        return array;
     }
 
     @Override
