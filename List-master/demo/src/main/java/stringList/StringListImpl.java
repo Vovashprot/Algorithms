@@ -5,30 +5,13 @@ import java.util.Arrays;
 public class StringListImpl implements StringList {
     private final int size = 0;
     private String[] array = new String[size];
-    // private int pointer = -1;
-
-  //  public int getPointer() {
-   //     return pointer;
-   // }
 
     private void resize(int newSize) {
         if (newSize < array.length && array[newSize-1]!= null) {
             throw new RuntimeException();
         }
        array = Arrays.copyOf(array,newSize);
-       //for (int i = 0; i <= array.length - 1; i++) {
-
     }
-
-   // public void reverse(int[] s){
-   //     int storage;
-   //     for (int i = 0; i<s.length/2;i++){
-   //         storage = s[s.length-1-i];
-   //         s[s.length-1-i] = s[i];
-   //         s[i] = storage;
-   //     }
-   //     //сделать без storage;
-   // }
 
     @Override
     public String add(String item) {
