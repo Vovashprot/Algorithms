@@ -1,6 +1,7 @@
 package stringList;
 
 public interface StringList {
+    //int getPointer();
 
     // Добавление элемента.
     // Вернуть добавленный элемент
