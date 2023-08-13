@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class IntListImpl implements IntList {
     private final int size = 0;
     private Integer[] array = new Integer[size];
+    boolean sorted = false;
 
     private void resize(int newSize) {
         if (newSize < array.length && array[newSize-1]!= null) {
@@ -19,6 +20,7 @@ public class IntListImpl implements IntList {
     public Integer add(Integer item) {
             resize(array.length + 1);
             array[array.length-1] = item;
+            boolean sorted = false;
             return item;
     }
 
@@ -33,6 +35,7 @@ public class IntListImpl implements IntList {
             array[i]=array[i-1];
         }
         array[index] =  item;
+        boolean sorted = false;
         return item;
     }
 
@@ -42,6 +45,7 @@ public class IntListImpl implements IntList {
             throw new RuntimeException();
         }
         array[index] = item;
+        boolean sorted = false;
         return item;
     }
 
@@ -55,6 +59,7 @@ public class IntListImpl implements IntList {
         }
         array[array.length-1] = null;
         resize(array.length-1);
+        boolean sorted = false;
         return item;
     }
 
@@ -69,11 +74,26 @@ public class IntListImpl implements IntList {
         }
         array[array.length-1] = null;
         resize(array.length-1);
+        boolean sorted = false;
         return deletedElement;
     }
-
+    public void sortInsertion() {
+        for (int i = 1; i < array.length; i++) {
+            int temp = array[i];
+            int j = i;
+            while (j > 0 && array[j - 1] >= temp) {
+                array[j] = array[j - 1];
+                j--;
+            }
+            array[j] = temp;
+        }
+    }
     @Override
     public boolean contains(Integer item) {
+        if (sorted = false) {
+            sortInsertion();
+            sorted = true;
+        }
         int min = 0;
         int max = array.length - 1;
 
